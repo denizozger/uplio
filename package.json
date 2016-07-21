@@ -1,0 +1,55 @@
+{
+  "name": "uplio",
+  "version": "1.0.0",
+  "description": "Processing diagnosic MRI scan data",
+  "main": "src/app.js",
+  "scripts": {
+    "clean:be": "./node_modules/rimraf/bin.js lib/**/*",
+    "clean:fe": "./node_modules/rimraf/bin.js public/dist/**/*",
+    "clean": "npm run clean:be && npm run clean:fe",
+    "prebuild": "npm run clean",
+    "build:fe": "./node_modules/.bin/node-sass -r web/scss -o public/dist/css",
+    "watch:fe": "./node_modules/.bin/node-sass -w -r web/scss -o public/dist/css",
+    "build:be": "./node_modules/.bin/babel src -d lib && ./node_modules/.bin/babel web/js -d public/dist/js",
+    "watch:be": "./node_modules/.bin/nodemon src/app --exec ./node_modules/.bin/babel-node",
+    "build": "npm run build:be && npm run build:fe",
+    "watch": "npm run watch:be && npm run watch:fe",
+    "predevelop": "npm run build",
+    "develop": "npm run watch | ./node_modules/.bin/bunyan",
+    "serve": "node lib/app",
+    "prestart": "npm run build",
+    "start": "npm run serve | ./node_modules/.bin/bunyan",
+    "test": "mocha --compilers js:babel-register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@stash.klarismo.com:7999/main/uplio.git"
+  },
+  "author": "Deniz Ozger <deniz@klarismo.com>",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "babel-cli": "6.10.1",
+    "babel-plugin-transform-runtime": "6.9.0",
+    "babel-polyfill": "6.9.1",
+    "babel-preset-es2015": "6.9.0",
+    "babel-preset-stage-2": "6.5.0",
+    "mocha": "2.5.3",
+    "nodemon": "1.9.2",
+    "supertest": "1.2.0"
+  },
+  "dependencies": {
+    "babel-runtime": "6.9.2",
+    "bunyan": "1.8.1",
+    "install": "0.8.1",
+    "koa": "1.2.0",
+    "koa-compress": "1.0.9",
+    "koa-ejs": "3.0.0",
+    "koa-logger": "1.3.0",
+    "koa-route": "2.4.2",
+    "koa-static": "2.0.0",
+    "node-emoji": "1.3.0",
+    "node-sass": "3.7.0",
+    "npm": "3.9.5",
+    "rimraf": "2.5.2"
+  }
+}
